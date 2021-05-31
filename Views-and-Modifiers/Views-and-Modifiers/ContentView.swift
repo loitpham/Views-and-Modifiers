@@ -61,6 +61,21 @@ extension View {
     }
 }
 
+struct LargeBlueTitle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundColor(.blue)
+            .padding()
+    }
+}
+
+extension View {
+    func largeBlueTitle() -> some View {
+        self.modifier(LargeBlueTitle())
+    }
+}
+
 struct GridStack<Content: View>: View {
     let rows: Int
     let cols: Int
@@ -89,9 +104,13 @@ struct ContentView: View {
     @State private var useRedText = false
     
     var body: some View {
-        GridStack(rows: 4, cols: 4) { row, col in
-            Image(systemName: "\(row * 4 + col).circle")
-            Text("R\(row) C\(col)")
+        VStack {
+            Text("Matrix")
+                .largeBlueTitle()
+            GridStack(rows: 4, cols: 4) { row, col in
+                Image(systemName: "\(row * 4 + col).circle")
+                Text("R\(row) C\(col)")
+            }
         }
     }
 }
